@@ -1,0 +1,35 @@
+<%- include('./includes/head.ejs') %>
+
+<link rel="stylesheet" href="css/sign-up.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Student Services - Login</h2>
+
+    <form action="/login" method="POST">
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <br><br>
+
+        <button type="submit">Login</button>
+
+        <br><br>
+        <% if (error) { %>
+        <p style="color: red"><%=errorText%></p>
+        <% }%>
+        <p style="text-align:center; margin-top:10px;">
+            <a href="/signup" style="color:#467bff; text-decoration:none;">Create new account</a>
+        </p>
+    </form>
+</div>
+
+</body>
+</html>

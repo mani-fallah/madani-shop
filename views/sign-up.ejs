@@ -1,0 +1,52 @@
+<%- include('./includes/head.ejs') %>
+
+<link rel="stylesheet" href="css/sign-up.css">
+</head>
+
+
+<body>
+<div class="login-container">
+    <form action="/signup" method="POST" style="width:300px; margin:20px auto; font-family:sans-serif;">
+        <label>Full Name:</label>
+        <input type="text" name="full_name" required value="<%=fullName%>" >
+
+        <br><br>
+        <label>Password:</label>
+        <input type="password" name="password_hash" required value="<%=password%>">
+        <br><br>
+        <label>شماره تماس:</label>
+        <input type="text" name="phone" required>
+
+        <br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <br><br>
+
+        <label>Role:</label>
+        <select name="role" required>
+            <option value="student">Student</option>
+            <option value="admin">admin</option>
+        </select>
+
+        <br><br>
+        <label>University:</label>
+        <select name="university_id" required>
+            <option value="">Select university</option>
+            <option value="1">University of Tehran</option>
+            <option value="2">Sharif University of Technology</option>
+            <option value="3">Amirkabir University of Technology</option>
+        </select>
+        <br><br>
+        <button type="submit">Submit</button>
+        <br><br>
+        <% if (error) { %>
+        <p style="color:red"><%=errorText%></p>
+        <%}%>
+
+    </form>
+
+</div>
+</body>
+</html>
