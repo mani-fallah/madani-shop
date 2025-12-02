@@ -1,0 +1,36 @@
+<%- include('../includes/head.ejs') %>
+
+
+<body >
+
+<% if(isAdmin) { %>
+<%- include('../includes/navigation.ejs') %>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Fullname</th>
+        <th scope="col">Role</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for ( let user of allUsers) { %>
+    <tr>
+        <th scope="row"><%=user.id%></th>
+        <td><%=user.full_name%></td>
+        <td><%=user.role%></td>
+        <td><%=user.status%></td>
+    </tr>
+    <% } %>
+
+    </tbody>
+</table>
+<%} else { %>
+<a href="/">
+    <h1>شما ادمین نیستید به صفحه اصلی سیکتیر کنید</h1>
+</a>
+
+<%}%>
+<%- include('../includes/end.ejs') %>

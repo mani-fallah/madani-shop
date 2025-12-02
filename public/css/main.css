@@ -1,10 +1,153 @@
-body {
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('../font/Vazir.ttf');
+}
+/* --- Base Reset --- */
+
+* {
     margin: 0;
     padding: 0;
-    font-family: "IRANSans", sans-serif;
-    background: #f3f8ff; /* آبی بسیار روشن */
+    box-sizing: border-box;
+    font-family: Vazir,sans-serif;
+}
+
+html{
+    height: 100%;
+}
+
+/* --- Main Header --- */
+.main-header {
+    width: 100%;
+    background: #0d6efd; /* آبی اصلی */
+    padding: 0.8rem 1.5rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    color: white;
+}
+
+.main-header__nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-header__item a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    transition: 0.2s ease;
+}
+
+.main-header__item a:hover {
+    background: #0b5ed7;
+}
+
+.main-header__item a.active {
+    background: white;
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+/* --- Mobile Button --- */
+#side-menu-toggle {
+    display: none;
+    background: white;
+    color: #0d6efd;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* --- Mobile Nav --- */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    padding-top: 5rem;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease-out;
+}
+
+.mobile-nav.open {
+    display: block;     /* 👈 این خط مهمه */
+    transform: translateX(0);
+}
+
+.mobile-nav__item-list li {
+    margin: 1rem;
+}
+
+.mobile-nav__item a {
+    color: #0d6efd;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.mobile-nav__item a.active {
+    color: #0b5ed7;
+    font-weight: 700;
+}
+
+/* --- Backdrop --- */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    display: none;
+    z-index: 50;
+}
+
+.backdrop.show {
+    display: block;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .main-header__nav {
+        display: none;
+    }
+
+    #side-menu-toggle {
+        display: block;
+    }
+}
+
+
+.box-shadow{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+
+.main-content{
+    min-height: calc(100vh - 70px); /* عدد 70px را با ارتفاع واقعی هدرت تنظیم کن */
+}
+/* ارتفاع پایه برای موبایل */
+.service-card {
+    border-radius: 15px;
+    transition: 0.3s ease;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+/* از سایز md به بالا (لپ‌تاپ و PC) ارتفاع را بیشتر کن */
+@media (min-width: 992px) {
+    .service-card {
+        min-height: 200px; /* 👈 مقدار دلخواه، می‌تونی 220 یا 250px هم بزاری */
+    }
 }

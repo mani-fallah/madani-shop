@@ -18,7 +18,11 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.2",
+    "install": "^0.13.0",
     "mysql2": "^3.15.3",
+    "npm": "^11.6.4",
     "pug": "^2.0.3"
   }
 }

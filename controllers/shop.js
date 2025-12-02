@@ -46,38 +46,97 @@ exports.postSignup = (req, res, next) => {
         }
     });
 }
-
 exports.postLogin = (req, res, next) => {
-    console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
 
     const user = new User();
-    user.findByEmail(email).then(([foundUser,info]) => {
-        if (foundUser.length > 0) {
-            if (foundUser[0].password_hash === password) {
-                res.redirect('/');
+    user.findByEmail(email)
+        .then(([foundUser]) => {
+            if (foundUser.length === 0) {
+                return res.render('login', {
+                    path: '/login',
+                    pageTitle: 'Login',
+                    error: true,
+                    errorText: 'email not found',
+                });
             }
-            else{
-                res.render('login',{
+
+            if (foundUser[0].password_hash !== password) {
+                return res.render('login', {
                     path: '/login',
                     pageTitle: 'Login',
                     error: true,
                     errorText: 'wrong password'
                 });
-
             }
-        }
-        else{
-            res.render('login',{
-                path: '/login',
-                pageTitle: 'Login',
-                error: true,
-                errorText: 'email not found',
-            });
-        }
 
-    }).catch(err => {
-        console.log(err);
+            // ✅ اینجا کاربر درست است → سشن را ست می‌کنیم
+            req.session.isLoggedIn = true;
+            req.session.user = foundUser[0];
+
+            // حتما از save استفاده کن تا قبل از redirect ذخیره شود
+            req.session.save(err => {
+                if (err) console.log(err);
+                res.redirect('/');   // آدرس صفحه اصلی
+            });
+        })
+        .catch(err => console.log(err));
+};
+
+// exports.postLogin = (req, res, next) => {
+//     console.log(req.body);
+//     const email = req.body.email;
+//     const password = req.body.password;
+//
+//     const user = new User();
+//     user.findByEmail(email).then(([foundUser, info]) => {
+//         if (foundUser.length > 0) {
+//             if (foundUser[0].password_hash === password) {
+//                 res.render('index',{
+//                     path: '/',
+//                     pageTitle: 'home',
+//                     isLoggedIn: true,
+//                 })
+//             } else {
+//                 res.render('login', {
+//                     path: '/login',
+//                     pageTitle: 'Login',
+//                     error: true,
+//                     errorText: 'wrong password'
+//                 });
+//
+//             }
+//         } else {
+//             res.render('login', {
+//                 path: '/login',
+//                 pageTitle: 'Login',
+//                 error: true,
+//                 errorText: 'email not found',
+//             });
+//         }
+//
+//     }).catch(err => {
+//         console.log(err);
+//     })
+// }
+
+exports.getIndex = (req,res,next) => {
+    res.render('index',{
+        path: '/',
+        pageTitle: 'home',
+        isLoggedIn: req.session.isLoggedIn,
+        isAdmin: req.session.user.role === 'admin',
     })
+
 }
+
+
+exports.getLogout = (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+        }
+        res.redirect('/login');
+    });
+};

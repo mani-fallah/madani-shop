@@ -14,6 +14,9 @@ module.exports = class User {
         this.updated_at = updated_at;
     }
 
+    getAllUsers(){
+        return db.execute('SELECT * FROM users');
+    }
     addUser() {
         return db.execute('insert into users(full_name,phone,email,password_hash,role,university_id,status) values (?,?,?,?,?,?,?)',
             [this.full_name, this.phone, this.email, this.password_hash, this.role,this.university_id,'active']);
@@ -21,5 +24,15 @@ module.exports = class User {
 
     findByEmail(email) {
         return db.execute('select * from users where email=?',[email])
+    }
+
+    isAdmin(id){
+        let out ;
+        db.execute('SELECT role FROM users WHERE id = ?',[id]).then(
+            (isAdmin) => {
+                out = (isAdmin[0][0].role === 'admin')
+            },
+        ).catch(error => console.log(error));
+        return out;
     }
 }
