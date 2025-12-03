@@ -135,7 +135,7 @@ html{
 }
 
 .main-content{
-    min-height: calc(100vh - 70px); /* عدد 70px را با ارتفاع واقعی هدرت تنظیم کن */
+    margin-top: 2rem;
 }
 /* ارتفاع پایه برای موبایل */
 .service-card {

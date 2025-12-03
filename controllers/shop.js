@@ -122,11 +122,16 @@ exports.postLogin = (req, res, next) => {
 // }
 
 exports.getIndex = (req,res,next) => {
+    let status = false;
+    if(  req.session.user )
+    {
+        status = req.session.user.role==='admin';
+    }
     res.render('index',{
         path: '/',
         pageTitle: 'home',
         isLoggedIn: req.session.isLoggedIn,
-        isAdmin: req.session.user.role === 'admin',
+        isAdmin: status,
     })
 
 }

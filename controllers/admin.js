@@ -13,3 +13,11 @@ exports.getAllUsers =  (req, res, next) => {
         console.log(err);
     })
 }
+
+exports.getAdminIndex = (req, res, next) => {
+    res.render('admin/admin', {
+        path:'/admin',
+        pageTitle: 'Admin Index',
+        isAdmin: req.session.user.role === 'admin',
+    })
+}
