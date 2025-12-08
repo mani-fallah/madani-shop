@@ -1,0 +1,102 @@
+<!-- views/student/laundry-detail.ejs -->
+<%- include('../includes/head.ejs') %>
+<body class="d-flex flex-column min-vh-100">
+<%- include('../includes/navigation.ejs') %>
+
+<section class="py-5" style="background-color: #f8f9ff;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-12 col-lg-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><%= laundry.name %></h4>
+                    </div>
+                    <div class="card-body bg-white">
+                        <% if (laundry.imageurl) { %>
+                            <div class="mb-3 text-center">
+                                <img src="<%= laundry.imageurl %>" alt="<%= laundry.name %>"
+                                     class="img-fluid rounded"
+                                     style="max-height: 220px; object-fit: cover; width: 100%;">
+                            </div>
+                        <% } %>
+
+                        <p class="mb-2">
+                            <span class="fw-semibold text-primary">آدرس:</span>
+                            <span class="text-muted"><%= laundry.address || 'ثبت نشده' %></span>
+                        </p>
+                        <p class="mb-2">
+                            <span class="fw-semibold text-primary">شهر:</span>
+                            <span class="text-muted"><%= laundry.city_name %></span>
+                        </p>
+                        <p class="mb-0 small text-muted">
+                            <%= laundry.description || 'بدون توضیحات اضافی' %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-7">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0 text-primary">ثبت درخواست خدمات خشکشویی</h5>
+                    </div>
+                    <div class="card-body bg-white">
+                        <form action="/laundry/<%=laundry.id%>" method="post" class="row g-3">
+
+                            <input type="hidden" name="provider_id" value="<%= laundry.id %>">
+
+                            <div class="col-6 col-md-4">
+                                <label class="form-label">تعداد کفش</label>
+                                <input type="number" class="form-control" name="shoes_count" min="0" value="0" required>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <label class="form-label">تعداد پتو</label>
+                                <input type="number" class="form-control" name="blanket_count" min="0" value="0" required>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <label class="form-label">تعداد کاپشن</label>
+                                <input type="number" class="form-control" name="jacket_count" min="0" value="0" required>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <label class="form-label">تعداد سایر لباس‌ها</label>
+                                <input type="number" class="form-control" name="other_clothes_count" min="0" value="0" required>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">تاریخ تحویل لباس (جلالی)</label>
+                                <input
+                                        type="text"
+                                        name="pickup_date"
+                                        class="form-control jalali-date"
+                                        data-jdp
+                                        placeholder="تاریخ را انتخاب کنید"
+                                        required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">توضیحات</label>
+                                <textarea
+                                        name="note"
+                                        rows="3"
+                                        class="form-control"
+                                        placeholder="توضیحات لازم برای محاسبه دقیق هزینه را وارد کنید"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    ثبت درخواست خدمت
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<%- include('../includes/end.ejs') %>

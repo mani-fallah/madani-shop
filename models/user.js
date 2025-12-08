@@ -26,13 +26,65 @@ module.exports = class User {
         return db.execute('select * from users where email=?',[email])
     }
 
-    isAdmin(id){
-        let out ;
-        db.execute('SELECT role FROM users WHERE id = ?',[id]).then(
-            (isAdmin) => {
-                out = (isAdmin[0][0].role === 'admin')
-            },
-        ).catch(error => console.log(error));
-        return out;
+    // findById(id) {
+    //     db.execute('select * from users where id=?',[id]).then(([result,info]) => {
+    //       console.log(result[0]);
+    //        return result[0];
+    //     }).catch((err) => {
+    //         console.error(err);
+    //     })
+    // }
+    findById(id) {
+        // نکته ۱: حتماً باید return را بنویسید تا Promise برگردد
+        return db.execute('select * from users where id=?', [id])
+            .then(([result, info]) => {
+                // این نتیجه به تابعی که این متد را صدا زده پاس داده می‌شود
+                return result[0];
+            })
+            .catch((err) => {
+                console.error(err);
+                throw err; // خطا را به بالا پرتاب کنید تا در کنترلر مدیریت شود
+            });
     }
+
+    update(userData) {
+        if (userData.password && userData.password.trim() !== '') {
+            return db.execute(
+                `UPDATE users 
+             SET full_name=?, phone=?, email=?, password_hash=?, role=?, status=?, university_id=?, updated_at=NOW() 
+             WHERE id=?`,
+                [
+                    userData.full_name,
+                    userData.phone,
+                    userData.email,
+                    userData.password_hash, // توجه: اینجا باید رمز هش شده باشد (در کنترلر توضیح دادم)
+                    userData.role,
+                    userData.status,
+                    userData.university_id,
+                    userData.id
+                ]
+            );
+        } else {
+            return db.execute(
+                `UPDATE users 
+             SET full_name=?, phone=?, email=?, role=?, status=?, university_id=?, updated_at=NOW() 
+             WHERE id=?`,
+                [
+                    userData.full_name,
+                    userData.phone,
+                    userData.email,
+                    userData.role,
+                    userData.status,
+                    userData.university_id,
+                    userData.id
+                ]
+            );
+        }
+    }
+
+    owners() {
+        return db.execute('SELECT * FROM users where role=?',['provider_owner']);
+    }
+
+
 }

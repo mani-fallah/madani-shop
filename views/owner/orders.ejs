@@ -1,0 +1,86 @@
+<!-- views/owner/orders.ejs -->
+<%- include('../includes/head.ejs') %>
+<body class="d-flex flex-column min-vh-100">
+<%- include('../includes/navigation.ejs') %>
+
+<section dir="rtl" class="py-5" style="background-color:#f8f9ff;">
+    <div class="container">
+        <h2 class="mb-4 text-primary fw-bold text-center">سفارش‌های خشکشویی</h2>
+
+        <form class="row g-2 mb-4" method="get" action="/owner/orders">
+            <div class="col-auto">
+                <label class="form-label mb-0">تاریخ (جلالی)</label>
+            </div>
+            <div class="col-auto">
+                <input
+                        type="text"
+                        name="date"
+                        id="filter_date"
+                        class="form-control"
+                        data-jdp
+                        value="<%= selectedDate || '' %>"
+                        placeholder="انتخاب تاریخ">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary">نمایش</button>
+            </div>
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                jalaliDatepicker.startWatch({
+                    time: false,
+                    persianDigits: true,
+                    // مهم: خروجی را به فرمت میلادی مشخص کن
+                    format: 'YYYY-MM-DD',
+                    gregorian: true
+                });
+            });
+        </script>
+
+
+    <% if (!orders || orders.length === 0) { %>
+            <p class="text-center text-muted">در این تاریخ سفارشی ثبت نشده است.</p>
+        <% } else { %>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>نام دانشجو</th>
+                        <th>شماره تماس</th>
+                        <th>وضعیت</th>
+                        <th>زمان تحویل برنامه‌ریزی‌شده</th>
+                        <th>مبلغ نهایی</th>
+                        <th>عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% orders.forEach(function(order, index){ %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= order.student_name %></td>
+                            <td><%= order.student_phone %></td>
+                            <td><%= order.status %></td>
+                            <td><%= order.scheduled_delivery_time ? order.scheduled_delivery_time.toLocaleString() : '-' %></td>
+                            <td><%= order.final_price %></td>
+                            <td>
+                                <% if (order.status === 'pending') { %>
+                                    <form action="/owner/orders/<%= order.id %>/confirm" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-success">
+                                            تأیید سفارش
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="badge bg-success">تأیید شده</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<%- include('../includes/end.ejs') %>

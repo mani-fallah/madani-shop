@@ -151,3 +151,11 @@ html{
         min-height: 200px; /* 👈 مقدار دلخواه، می‌تونی 220 یا 250px هم بزاری */
     }
 }
+
+th,td {
+    cursor: pointer;
+}
+
+section{
+    direction: rtl !important;
+}

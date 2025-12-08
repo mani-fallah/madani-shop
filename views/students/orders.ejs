@@ -1,0 +1,57 @@
+<!-- views/student/orders.ejs -->
+<%- include('../includes/head.ejs') %>
+<body class="d-flex flex-column min-vh-100">
+<%- include('../includes/navigation.ejs') %>
+
+<section class="py-5" style="background-color:#f8f9ff;">
+    <div class="container">
+        <h2 class="mb-4 text-primary fw-bold text-center">سفارش‌های من</h2>
+
+        <% if (!orders || orders.length === 0) { %>
+            <p class="text-center text-muted">هنوز سفارشی ثبت نکرده‌اید.</p>
+        <% } else { %>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>ارائه‌دهنده</th>
+                        <th>وضعیت</th>
+                        <th>تاریخ تحویل برنامه‌ریزی‌شده</th>
+                        <th>مبلغ نهایی (تومان)</th>
+                        <th>تاریخ ثبت</th>
+                        <th>عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% orders.forEach(function(order, index){ %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= order.provider_name || '-' %></td>
+                            <td><%= order.status %></td>
+                            <td><%= order.scheduled_delivery_time ? order.scheduled_delivery_time.toLocaleString() : '-' %></td>
+                            <td><%= order.final_price %></td>
+                            <td><%= order.created_at ? order.created_at.toLocaleString() : '-' %></td>
+                            <td>
+                                <% if (order.status !== 'canceled_user' && order.status !== 'canceled_provider' && order.status !== 'delivered') { %>
+                                    <form action="/orders/<%= order.id %>/cancel" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            لغو سفارش
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <span class="text-muted small">لغو شده</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                    </tbody>
+
+                </table>
+            </div>
+        <% } %>
+    </div>
+</section>
+<%- include('../includes/footer.ejs') %>
+
+<%- include('../includes/end.ejs') %>

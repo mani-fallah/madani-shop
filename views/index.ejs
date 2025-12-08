@@ -6,11 +6,18 @@
 <%- include('./includes/navigation.ejs') %>
 
 <%if (isAdmin) { %>
-    <span class="d-flex justify-content-end">
+    <span class="d-flex justify-content-center aling-items-center">
         <a href="/admin">ورود به پنل ادمین</a>
     </span>
 
 <% } %>
+
+<% if (isprovider) { %>
+    <span class="d-flex justify-content-center aling-items-center">
+        <a href="/owner/orders">پنل خدمات شما</a>
+    </span>
+
+        <%} %>
 
 <% if (isLoggedIn) { %>
     <div class="container d-flex justify-content-center align-items-center main-content">
@@ -26,12 +33,14 @@
                         <p class="card-text">
                             امکان سفارش انواع غذاهای خانگی و رستورانی با ارسال سریع.
                         </p>
+                        <p>Coming soon!!!</p>
+
                     </div>
                 </div>
             </div>
 
             <!-- خشکشویی -->
-            <div class="col-md-4 mb-4 d-flex">
+            <div class="col-md-4 mb-4 d-flex" onclick="window.location.href='/laundry'">
                 <div class="card box-shadow border-0 service-card h-100 w-100">
                     <div class="card-body">
                         <h4 class="card-title text-primary mb-3">🧼 سفارش خشکشویی</h4>
@@ -50,6 +59,7 @@
                         <p class="card-text">
                             خرید انواع لوازم‌التحریر مدرسه و دفتر کار با قیمت مناسب.
                         </p>
+                        <p>Coming soon!!!</p>
                     </div>
                 </div>
             </div>
@@ -57,8 +67,14 @@
         </div>
     </div>
 <% } else { %>
-<a href="/login">
-<h2>برای دسترسی به خدمات سایت لاگین کنید</h2>
-</a>
+<div class="d-flex justify-content-center align-items-center h-100">
+    <a href="/login">
+        <h2>برای دسترسی به خدمات سایت لاگین کنید</h2>
+    </a>
+</div>
 <% } %>
+
+<%- include('./includes/footer.ejs') %>
+
+
 <%- include('./includes/end.ejs') %>

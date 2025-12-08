@@ -1,0 +1,49 @@
+<!-- views/student/laundries.ejs -->
+<%- include('../includes/head.ejs') %>
+<body class="d-flex flex-column min-vh-100">
+<%- include('../includes/navigation.ejs') %>
+
+<section dir="rtl" class="py-5" style="background-color: #f8f9ff;">
+    <div class="container">
+        <h2 class="text-center mb-4 text-primary fw-bold">خشکشویی‌ها</h2>
+        <p class="text-center text-muted mb-5">
+            برای مشاهده جزییات و ثبت درخواست، یکی از خشکشویی‌ها را انتخاب کنید.
+        </p>
+
+        <div class="row g-4">
+            <% laundries.forEach(function(laundry){ %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0"><%= laundry.name %></h5>
+                        </div>
+                        <div class="card-body bg-white">
+                            <% if (laundry.imageurl) { %>
+                                <div class="mb-3 text-center">
+                                    <img src="<%= laundry.imageurl %>" alt="<%= laundry.name %>"
+                                         class="img-fluid rounded"
+                                         style="max-height: 180px; object-fit: cover; width: 100%;">
+                                </div>
+                            <% } %>
+
+                            <p class="card-text mb-1">
+                                <span class="fw-semibold text-primary">آدرس:</span>
+                                <span class="text-muted"><%= laundry.address || 'ثبت نشده' %></span>
+                            </p>
+                            <p class="card-text mb-1">
+                                <span class="fw-semibold text-primary">شهر:</span>
+                                <span class="text-muted"><%= laundry.city_name %></span>
+                            </p>
+
+                            <a href="/laundry/<%= laundry.id %>" class="btn btn-outline-primary w-100 mt-3">
+                                مشاهده جزییات و ثبت درخواست
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<%- include('../includes/end.ejs') %>

@@ -1,0 +1,85 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user-detail.css"/>
+
+<body class="d-flex flex-column min-vh-100" >
+
+<% if(isAdmin) { %>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main class="container" dir="rtl">
+        <div class="edit-card">
+            <div class="card-header">
+                <h2>ویرایش اطلاعات کاربر</h2>
+                <span class="user-id-badge">شناسه کاربر: <%=user.id%>#</span>
+            </div>
+
+            <form action="/admin/see-users" method="POST" class="edit-form">
+                <input style="display: none" name="user_id" value="<%=user.id%>">
+                <div class="form-group">
+                    <label for="full_name">نام و نام خانوادگی</label>
+                    <input type="text" id="full_name" name="full_name" value="<%=user.full_name%>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">شماره تماس</label>
+                    <input type="tel" id="phone" name="phone" value="<%=user.phone%>" dir="ltr" class="text-left">
+                </div>
+
+                <!-- ردیف دوم: اطلاعات دسترسی -->
+                <div class="form-group">
+                    <label for="email">ایمیل</label>
+                    <input type="email" id="email" name="email" value="<%=user.email%>" dir="ltr" class="text-left">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">رمز عبور جدید</label>
+                    <input type="password"  id="password" name="password" placeholder="در صورت عدم تغییر خالی بگذارید">
+                    <small class="hint">رمز عبور فعلی به صورت هش شده ذخیره است.</small>
+                </div>
+
+                <!-- ردیف سوم: وضعیت و نقش -->
+                <div class="form-group">
+                    <label for="role">نقش کاربری (Role)</label>
+                    <select id="role" name="role">
+                        <option value="student" <%if (user.role==='student') { %> selected <% } %> >دانشجو (student)</option>
+                        <option value="provider_owner" <%if (user.role==='provider_owner') { %> selected <% } %> >صاحب شغل (owner)</option>
+                        <option value="provider_staff" <%if (user.role==='provider_staff') { %> selected <% } %>>کارگر شغل (worker)</option>
+                        <option value="admin" <%if (user.role==='admin') { %> selected <% } %>>ادمین (admin)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">وضعیت (Status)</label>
+                    <select id="status" name="status">
+                        <option value="active" selected>فعال (active)</option>
+                        <option value="blocked">بن شده (block)</option>
+                    </select>
+                </div>
+
+                <!-- ردیف چهارم: اطلاعات سیستمی (فقط خواندنی) -->
+                <div class="form-group">
+                    <label for="university_id">شناسه دانشگاه</label>
+                    <input type="number" id="university_id" name="university_id" value="2">
+                </div>
+
+                <div class="form-group read-only-group">
+                    <label>تاریخ ایجاد</label>
+                    <div class="static-value">2025-12-01 | 15:31</div>
+                </div>
+
+                <!-- دکمه‌ها -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">انصراف</button>
+                    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+<%} else { %>
+    <a href="/">
+        <h1>شما ادمین نیستید به صفحه اصلی  بروید</h1>
+    </a>
+
+<%}%>
+<%- include('../includes/end.ejs') %>

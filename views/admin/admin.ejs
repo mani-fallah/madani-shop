@@ -6,14 +6,57 @@
 
 <%- include('../includes/navigation.ejs') %>
 
-<h1>NO CONTENT</h1>
+<div class="container d-flex justify-content-center align-items-center main-content">
+    <div class="row h-100 justify-content-center text-center">
+        <div class="index-header">
+            <!--                <h2>خدمات دانشگاهی</h2>-->
+        </div>
+        <!-- سفارش غذا -->
+        <div class="col-md-4 mb-4 d-flex">
+            <div class="card box-shadow border-0 service-card h-100 w-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-3">🍽 ویرایش شهر و دانشگاه ها</h4>
+                    <p class="card-text">
+                            شهر ها و دانشگاه های مورد تایید ما را در این بخش تعیین کنید.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4 d-flex" onclick="window.location.href='/admin/add-provider'">
+            <div class="card box-shadow border-0 service-card h-100 w-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-3">🧼 افزودن خدمات دهندگان</h4>
+                    <p class="card-text">
+                                    این قسمت برای تایید مشاغل و یا رد صلاحیت آنان است
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4 d-flex" onclick="window.location.href='/admin/see-users'">
+            <div class="card box-shadow border-0 service-card h-100 w-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-3">✏️ ویرایش کاربران</h4>
+                    <p class="card-text">
+                            شما در این بخش میتوانید کاربران ثبت نام شده را مشاهده کرده ، و وضعیت آنان را تغییر دهید.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>
+
 <%- include('../includes/end.ejs') %>
 <% } else { %>
     <h2>فقط ادمین ها به این بخش دسترسی دارند بزودی به صفحه اصلی منتقل میشوید</h2>
 
     <script>
         setTimeout(()=>{
-            window.location.href = '/'
+            window.location.replace('/')
         },4000)
     </script>
 <% }%>
